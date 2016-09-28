@@ -17,7 +17,7 @@ Usage
 require 'qnap/file_station'
 
 fs = Qnap::FileStation.new '192.168.1.100', 'username', 'password'
-fs.createdir dest_folder: "", dest_path: ""
+fs.createdir dest_folder: "new_folder", dest_path: "/some/path"
 contents = fs.get_extract_list extract_file: "my_zip_file.zip"
 fs.logout
 ```
@@ -34,6 +34,7 @@ end
 ```
 
 Available methods
+-------
 
 ### createdir
 Create a folder in the specified path.
