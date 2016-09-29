@@ -41,13 +41,15 @@ end
 
 Constants
 -------
-`Qnap::FileStation::DEBUG`, default: `false`. Print extensive debugging information to @stdout of `true`
-`Qnap::FileStation::DISCARD_EXTRANEOUS` default: `true`, Discard any parameters we're not expecting, before despatching to the API
+`Qnap::FileStation::DEBUG`, default: `false`. Print extensive debugging information to `$stdout` if `true`
+
+`Qnap::FileStation::DISCARD_EXTRANEOUS`, default: `true`, Discard any parameters we're not expecting before despatching to the API
+
 `Qnap::FileStation::PROTOCOL`, default: `"https"`
 
 Exceptions
 -------
-API communication errors will raise a Qnap::ApiError exception. The message will indicate what went wrong, the `uri` method will return the URI that was being queried at the time, and `the response` method will return the `Net::HTTPResponse` response
+API communication errors will raise a `Qnap::ApiError` exception. The message will indicate what went wrong, the `uri` method will return the URI that was being queried at the time, and the `response` method will return the `Net::HTTPResponse` response
 
 ```ruby
 begin
