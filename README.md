@@ -25,13 +25,44 @@ fs.logout
 ```ruby
 # Alternative syntax to guarantee logout
 
+Qnap::FileStation::DEBUG = true
+
 Qnap::FileStation.session('192.168.1.100', 'username', 'password') do |fs|
 	# Show contents of the recycle bin
 	pp fs.get_tree node: "recycle_root"
+
+	# Show available network players (AirPlay, Chromecast, DLNA players, etc.)
+	# May not be available, depending on model
+	pp fs.get_network_players op: 1
 	# logout is automatically called, even if there was an exception
 end
 
 ```
+
+Constants
+-------
+`Qnap::FileStation::DEBUG`, default: `false`. Print extensive debugging information to @stdout of `true`
+`Qnap::FileStation::DISCARD_EXTRANEOUS` default: `true`, Discard any parameters we're not expecting, before despatching to the API
+`Qnap::FileStation::PROTOCOL`, default: `"https"`
+
+Exceptions
+-------
+API communication errors will raise a Qnap::ApiError exception. The message will indicate what went wrong, the `uri` method will return the URI that was being queried at the time, and `the response` method will return the `Net::HTTPResponse` response
+
+```ruby
+begin
+	Qnap::FileStation.session('192.168.1.100', 'username', 'invalid_password') do |fs|
+		fs.get_tree node: "recycle_root"
+	end
+rescue Qnap::ApiError => e
+	puts "Error message was" + e.message
+	puts "URI was " + e.uri.to_s
+	puts "Response code was " + e.response.code
+	puts "Response body was " + e.response.read_body
+end
+
+```
+
 
 Available methods
 -------
@@ -423,6 +454,14 @@ Key | Description
 --- | ---
 path | The path folder name of recycle bin
 file_name | Same as the value ${path}
+
+### get_network_players (alias: `qrpac`)
+Show available network players (AirPlay, Chromecast, DLNA players, etc.) May not be available, depending on model
+
+#### Parameters
+Key | Description
+--- | ---
+op | 1: 
 
 ### video_ml_queue
 Retrieve the status of media library transcoding queue.
