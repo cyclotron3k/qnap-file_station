@@ -137,12 +137,15 @@ module Qnap
 				raise "Error response from #{uri} -> #{response.read_body}"
 			end
 
-			unless response['content-type'] =~ /application\/json/
-				raise "Don't know how to parse #{response['content-type']}"
+			case response['content-type']
+				when /application\/json/
+					data = JSON.parse response.read_body, symbolize_names: true
+				when /application\/force-download/
+					data = response.read_body.force_encoding('UTF-8')
+				else
+					raise "Don't know how to parse #{response['content-type']}"
 			end
-			
-			data = JSON.parse response.read_body, symbolize_names: true
-			
+
 			if data.respond_to?(:key?) and data.key?(:status) and data[:status] != 1
 				raise Qnap::ApiError.new data[:status], uri, response
 			end
