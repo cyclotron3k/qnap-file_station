@@ -123,7 +123,7 @@ module Qnap
 		def despatch_query(path, params)
 			uri = @base_uri.clone
 			uri.path = path
-			uri.query = URI.encode_www_form(params) if params.keys.length > 0
+			uri.query = URI.encode_www_form(params).gsub('+', '%20') if params.keys.length > 0
 			req = Net::HTTP::Get.new uri
 
 			puts "\n\n\e[1;32mDespatching request to #{params[:func]}\e[0m" if DEBUG
