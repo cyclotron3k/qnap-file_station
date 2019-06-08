@@ -39,6 +39,21 @@ end
 
 ```
 
+Alternatively, if the username and password are not provided, Qnap::FileStation will attempt to read them from environment variables.
+```ruby
+# ENV['QNAP_USERNAME']
+# ENV['QNAP_PASSWORD']
+
+fs = Qnap::FileStation.new '192.168.1.100'
+# ...
+fs.logout
+
+# or...
+Qnap::FileStation.session('192.168.1.100') do |fs|
+	# ...
+end
+```
+
 Constants
 -------
 `Qnap::FileStation::DEBUG`, default: `false`. Print extensive debugging information to `$stdout` if `true`
@@ -290,7 +305,7 @@ path | Folder path.
 file_total | Total number of folder/file(s).
 file_name | Folder/file name.
 
-### stat 
+### stat
 Set folder(s)/file(s) modification time.
 
 #### Parameters
@@ -316,7 +331,7 @@ limit | Number of response data
 sort | Sort field (filename/filesize/filetype/mt/privilege/owner/group)
 start | Response data start index
 
-### 
+###
 Download a shared file by an unique ID (ssid).
 
 #### Parameters
@@ -463,7 +478,7 @@ Show available network players (AirPlay, Chromecast, DLNA players, etc.) May not
 #### Parameters
 Key | Description
 --- | ---
-op | 1: 
+op | 1:
 
 ### video_ml_queue
 Retrieve the status of media library transcoding queue.

@@ -103,7 +103,11 @@ module Qnap
 			@sid ||= login(user: @username, pwd: Base64.encode64(@password).strip)[:sid]
 		end
 
-		def initialize(host, username, password)
+		def initialize(host, username = ENV['QNAP_USERNAME'], password = ENV['QNAP_PASSWORD'])
+
+			raise ArgumentError.new("No username defined") if username.nil?
+			raise ArgumentError.new("No password defined") if password.nil?
+
 			@host     = host
 			@username = username
 			@password = password
@@ -111,7 +115,7 @@ module Qnap
 			@base_uri = URI "#{PROTOCOL}://#{@host}"
 			@path     = "/cgi-bin/filemanager/utilRequest.cgi"
 			@agent    = Net::HTTP.new @base_uri.host, @base_uri.port
-			
+
 			@agent.use_ssl = PROTOCOL == 'https',
 			@agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			@agent.keep_alive_timeout = 10

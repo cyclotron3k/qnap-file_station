@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name         = "qnap-file_station"
-	s.version      = "0.0.4"
+	s.version      = "0.0.5"
 	s.summary      = "Interface to the File Station API"
 	s.description  = "Manage your files and folders in File Station"
 	s.authors      = "cyclotron3k"
