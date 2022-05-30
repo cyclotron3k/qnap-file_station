@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
 	s.name         = "qnap-file_station"
-	s.version      = "0.0.5"
+	s.version      = "0.0.6"
 	s.summary      = "Interface to the File Station API"
-	s.description  = "Manage your files and folders in File Station"
+	s.description  = "Manage your files and folders in File Station. (Compatible with older, QTS 4.x models)"
 	s.authors      = "cyclotron3k"
 	s.files        = ["lib/qnap/file_station.rb", "lib/qnap/api_error.rb", "Rakefile", "qnap-file_station.gemspec", "README.md"]
 	s.test_files   = ["test/test_file_station.rb"]
